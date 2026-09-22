@@ -82,53 +82,23 @@ reais.
 
 ## Documentação
 
-As etapas abaixo descrevem o projeto sem identificar aluno, professor, cidade
-ou vínculo profissional:
+As etapas abaixo registram a pesquisa, a modelagem e o desenvolvimento do
+projeto:
 
 - [Etapa 01 — Pesquisa e escopo](documentacao/etapa-01-pesquisa.md)
 - [Etapa 02 — Requisitos e modelagem](documentacao/etapa-02-requisitos-e-diagramas.md)
 - [Etapa 03 — Desenvolvimento e testes](documentacao/etapa-03-desenvolvimento.md)
-- [Etapa 04 — Relato de experiência](documentacao/etapa-04-relato-experiencia.md)
 
 Os [diagramas](documentacao/diagramas/) estão disponíveis como fontes PlantUML
 e imagens.
 
-> [!IMPORTANT]
-> O PDF e o DOCX da entrega acadêmica contêm dados de identificação. Eles ficam
-> em `documentacao/entrega/`, pasta excluída pelo `.gitignore`, e devem ser
-> enviados apenas pelo canal de entrega da instituição. Um envio manual de
-> arquivos ao GitHub não aplica as regras do `.gitignore`.
-
-### Regenerar o relatório
-
-Após editar uma etapa, instale as dependências documentais e informe os dados
-da capa localmente. Substitua os exemplos entre aspas pelos dados corretos:
-
-```bash
-.venv/bin/python -m pip install -r requirements-docs.txt
-.venv/bin/python tools/gerar_relatorio.py \
-  --aluno "NOME DO ALUNO" \
-  --professor "NOME DO PROFESSOR" \
-  --cidade "CIDADE - UF" \
-  --instituicao "INSTITUIÇÃO"
-```
-
-O gerador deixa apenas o PDF e o DOCX em `documentacao/entrega/` quando ambos
-são produzidos. O PDF requer Google Chrome ou Chromium; o DOCX requer
-LibreOffice. `--ano` e `--curso` também podem ser informados, se necessário.
-Se existir um complemento em `apoio-privado/contexto-relatorio.md`, ele será
-incluído apenas no relatório gerado localmente.
-
-## Estrutura essencial
+## Estrutura do projeto
 
 ```text
 lock/          aplicação Flask, páginas, estilos e esquema do banco
 tests/         testes automatizados
-documentacao/  etapas e diagramas; entrega acadêmica local ignorada
-tools/         gerador do relatório
+documentacao/  etapas e diagramas do projeto
 run.py         inicialização do servidor local
 ```
 
-`instance/` é criada automaticamente para o banco local. Ela e
-`apoio-privado/` não devem ser compartilhadas. O vídeo de usabilidade é uma
-entrega separada, conforme as orientações do AVA.
+`instance/` é criada automaticamente para o banco local e não é versionada.
