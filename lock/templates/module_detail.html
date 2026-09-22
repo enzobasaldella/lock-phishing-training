@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}{{ module['title'] }}{% endblock %}
+{% block content %}
+<section class="page-head"><div class="container"><a class="back-link" href="{{ url_for('main.dashboard') }}">← Voltar ao início</a><span class="eyebrow">Treinamento Lock</span><h1>{{ module['title'] }}</h1><p>{{ module['description'] }}</p></div></section>
+<section class="section container content-grid">
+  <article class="lesson-card">
+    <span class="tag">Leitura rápida</span>
+    <h2>Antes de abrir a caixa de entrada</h2>
+    <p class="lesson-text">{{ module['content'] }}</p>
+    <div class="notice"><strong>Um ambiente sem risco</strong><p>As mensagens são fictícias. Os botões não abrem sites e você não precisará informar nenhuma senha real.</p></div>
+  </article>
+  <aside>
+    <div class="module-progress-panel">
+      <span class="eyebrow">Seu progresso</span>
+      <strong>{{ 'Todas as atividades realizadas' if progress and progress['completed'] else 'Continue de onde parou' }}</strong>
+      <progress class="progress-meter" value="{{ progress['percentage'] if progress else 0 }}" max="100" aria-label="Atividades realizadas"></progress>
+      <small>{{ progress['percentage'] if progress else 0 }}% das atividades realizadas</small>
+    </div>
+    <h2>Exercícios para analisar</h2>
+    <div class="activity-list">
+      {% for scenario in scenarios %}
+        <a class="activity-card" href="{{ url_for('main.simulation', scenario_id=scenario['id']) }}">
+          <span class="activity-icon">{{ '✓' if scenario['attempted'] else loop.index }}</span>
+          <span><strong>{{ scenario['title'] }}</strong><small>{% if scenario['claimed_brand'] %}{{ scenario['claimed_brand'] }} · {% endif %}{{ {'email':'E-mail','sms':'SMS','message':'Mensagem'}[scenario['kind']] }}{% if scenario['difficulty'] %} · {{ {'basico':'Básico','intermediario':'Intermediário','avancado':'Avançado'}[scenario['difficulty']] }}{% endif %}</small></span><b>→</b>
+        </a>
+      {% endfor %}
+      {% if question_count %}
+        <a class="activity-card" href="{{ url_for('main.quiz', module_id=module['id']) }}"><span class="activity-icon">Q</span><span><strong>Quiz do módulo</strong><small>{{ question_count }} questões</small></span><b>→</b></a>
+      {% endif %}
+    </div>
+  </aside>
+</section>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Administração{% endblock %}
+{% block content %}
+<section class="page-head"><div class="container"><span class="eyebrow">PAINEL ADMINISTRATIVO</span><h1>Visão geral</h1><p>Indicadores agregados dos treinamentos do Lock.</p><div class="button-row"><a class="button button-small" href="{{ url_for('admin.modules') }}">Gerenciar conteúdo</a><a class="button button-secondary button-small" href="{{ url_for('admin.audit') }}">Ver auditoria</a></div></div></section>
+<section class="section container">
+  <div class="stats-grid"><article><span>Participantes</span><strong>{{ totals.participants }}</strong></article><article><span>Módulos</span><strong>{{ totals.modules }}</strong></article><article><span>Simulações realizadas</span><strong>{{ totals.attempts }}</strong></article><article><span>Taxa de acerto</span><strong>{{ totals.accuracy }}%</strong></article></div>
+  <div class="table-card"><div class="row-heading"><div><span class="eyebrow">DESEMPENHO</span><h2>Indicadores por módulo</h2></div></div><div class="table-scroll"><table><thead><tr><th>Módulo</th><th>Status</th><th>Participantes</th><th>Progresso médio</th></tr></thead><tbody>{% for item in module_stats %}<tr><td><strong>{{ item['title'] }}</strong></td><td><span class="tag {{ 'tag-success' if item['published'] else 'tag-muted' }}">{{ 'Publicado' if item['published'] else 'Rascunho' }}</span></td><td>{{ item['participants'] }}</td><td>{{ item['average_progress'] }}%</td></tr>{% endfor %}</tbody></table></div></div>
+</section>
+{% endblock %}

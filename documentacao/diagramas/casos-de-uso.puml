@@ -1,0 +1,43 @@
+@startuml
+!pragma layout smetana
+left to right direction
+skinparam packageStyle rectangle
+skinparam shadowing false
+skinparam actorStyle awesome
+
+actor Visitante
+actor Participante
+actor Administrador
+Participante --|> Visitante
+Administrador --|> Participante
+
+rectangle "Lock - Plataforma Web" {
+  usecase "Criar conta" as UC1
+  usecase "Autenticar-se" as UC2
+  usecase "Encerrar sessão" as UC3
+  usecase "Acessar áreas publicadas" as UC4
+  usecase "Ler e concluir cartilha" as UC5
+  usecase "Realizar exercício" as UC6
+  usecase "Receber feedback" as UC7
+  usecase "Responder quiz opcional" as UC8
+  usecase "Consultar progresso" as UC9
+  usecase "Gerenciar módulos" as UC10
+  usecase "Gerenciar cenários e questões" as UC11
+  usecase "Consultar indicadores agregados" as UC12
+  usecase "Consultar auditoria" as UC13
+}
+
+Visitante --> UC1
+Visitante --> UC2
+Participante --> UC3
+Participante --> UC4
+Participante --> UC5
+Participante --> UC6
+Participante --> UC8
+Participante --> UC9
+UC6 .> UC7 : <<include>>
+Administrador --> UC10
+Administrador --> UC11
+Administrador --> UC12
+Administrador --> UC13
+@enduml

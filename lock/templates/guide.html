@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}O que é phishing{% endblock %}
+{% block content %}
+<section class="page-head guide-head"><div class="container"><a class="back-link" href="{{ url_for('main.dashboard') }}">← Voltar ao início</a><span class="eyebrow">CARTILHA · 5 MINUTOS</span><h1>O que é phishing</h1><p>Uma leitura curta para tomar decisões melhores quando uma mensagem pede pressa.</p></div></section>
+<section class="section container guide-layout">
+  <article class="guide-article">
+    <p class="guide-lead">Uma mensagem pode parecer comum, citar uma marca conhecida e ainda tentar levar você a entregar dados ou abrir um arquivo perigoso.</p>
+    <div class="guide-body">{{ module['content'] }}</div>
+    <div class="guide-next"><strong>Pronto para praticar?</strong><p>Nos exercícios, você vai encontrar mensagens fraudulentas, legítimas e duvidosas. O objetivo é aprender a verificar, não apenas decorar sinais.</p><a class="button" href="{{ url_for('main.exercises') }}">Abrir os exercícios →</a></div>
+  </article>
+  <aside class="guide-side">
+    <div class="guide-checklist"><span class="eyebrow">ANTES DE AGIR</span><h2>Três perguntas rápidas</h2><ol><li>Eu esperava receber esta mensagem?</li><li>O que ela quer que eu faça?</li><li>Consigo confirmar por outro caminho?</li></ol></div>
+    {% if progress and progress['completed'] %}
+      <div class="guide-done">✓ Leitura concluída. Você pode voltar a esta cartilha quando quiser.</div>
+    {% else %}
+      <form method="post" action="{{ url_for('main.guide_complete') }}" data-guide-complete><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="button button-full" type="submit">Marcar leitura como concluída</button></form>
+    {% endif %}
+  </aside>
+</section>
+{% endblock %}
+{% block scripts %}<script defer src="{{ url_for('static', filename='simulation.js') }}"></script>{% endblock %}

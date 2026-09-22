@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Entrar{% endblock %}
+{% block content %}
+<section class="section narrow">
+  <div class="auth-card">
+    <span class="eyebrow">Sua conta Lock</span>
+    <h1>Continue de onde parou.</h1>
+    <p>Entre para continuar os exercícios e acompanhar seu progresso.</p>
+    <form method="post" class="stack-form">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      <label for="email">E-mail</label>
+      <input id="email" name="email" type="email" autocomplete="email" maxlength="150" required value="{{ request.form.get('email', '') }}">
+      <label for="password">Senha</label>
+      <input id="password" name="password" type="password" autocomplete="current-password" required>
+      <button class="button button-full" type="submit">Entrar</button>
+    </form>
+    <div class="demo-box">
+      <strong>Acesso de demonstração</strong>
+      <p>Participante: aluno@lock.local · Lock@123</p>
+      <p>Administrador: admin@lock.local · Admin@123</p>
+    </div>
+    <p class="centered">Ainda não possui conta? <a href="{{ url_for('auth.register') }}">Cadastre-se</a></p>
+  </div>
+</section>
+{% endblock %}

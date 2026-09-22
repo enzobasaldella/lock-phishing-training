@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Lock: treinamento seguro contra phishing.">
+  <title>{% block title %}Lock{% endblock %} · Treinamento contra phishing</title>
+  <link rel="icon" href="{{ url_for('static', filename='favicon.svg') }}" type="image/svg+xml">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Ir para o conteúdo</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="{{ url_for('main.index') }}" aria-label="Lock - início">
+        <span class="brand-mark" aria-hidden="true"><img src="{{ url_for('static', filename='favicon.svg') }}" alt=""></span>
+        <span>Lock</span>
+      </a>
+      <nav aria-label="Navegação principal">
+        {% if g.user %}
+          <a href="{{ url_for('main.dashboard') }}" {% if request.endpoint == 'main.dashboard' %}aria-current="page"{% endif %}>Início</a>
+          <a href="{{ url_for('main.guide') }}" {% if request.endpoint == 'main.guide' %}aria-current="page"{% endif %}>Cartilha</a>
+          <a href="{{ url_for('main.exercises') }}" {% if request.endpoint in ('main.exercises', 'main.simulation') %}aria-current="page"{% endif %}>Exercícios</a>
+          <a href="{{ url_for('main.progress') }}" {% if request.endpoint == 'main.progress' %}aria-current="page"{% endif %}><span class="nav-full">Meu progresso</span><span class="nav-short">Progresso</span></a>
+          {% if g.user['role'] == 'admin' %}
+            <a href="{{ url_for('admin.dashboard') }}" {% if request.blueprint == 'admin' %}aria-current="page"{% endif %}><span class="nav-full">Administração</span><span class="nav-short">Admin</span></a>
+          {% endif %}
+          <form class="inline-form" method="post" action="{{ url_for('auth.logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+            <button class="link-button" type="submit">Sair</button>
+          </form>
+        {% else %}
+          <a href="{{ url_for('auth.login') }}">Entrar</a>
+          <a class="button button-small" href="{{ url_for('auth.register') }}">Criar conta</a>
+        {% endif %}
+      </nav>
+    </div>
+  </header>
+
+  <main id="main-content">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="container alerts" aria-live="polite">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-wrap">
+      <p><strong>Lock</strong> · Protótipo acadêmico de conscientização.</p>
+      <p>Todos os cenários são fictícios e não contêm links ativos.</p>
+    </div>
+  </footer>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

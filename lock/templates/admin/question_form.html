@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Editar questão' if question else 'Nova questão' }}{% endblock %}
+{% block content %}
+<section class="page-head compact"><div class="container"><a class="back-link" href="{{ url_for('admin.module_edit', module_id=module['id']) }}">← Voltar ao módulo</a><span class="eyebrow">QUIZ</span><h1>{{ 'Editar questão' if question else 'Nova questão' }}</h1><p>{{ module['title'] }}</p></div></section>
+<section class="section narrow-wide"><form method="post" class="form-card stack-form"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <label for="prompt">Enunciado</label><textarea id="prompt" name="prompt" rows="3" required>{{ request.form.get('prompt', question['prompt'] if question else '') }}</textarea>
+  <label for="explanation">Explicação após a resposta</label><textarea id="explanation" name="explanation" rows="3" required>{{ request.form.get('explanation', question['explanation'] if question else '') }}</textarea>
+  <fieldset class="option-editor"><legend>Alternativas</legend>{% for index in range(4) %}{% set option = alternatives[index] if alternatives|length > index else none %}<div><input type="radio" name="correct_option" value="{{ index }}" required {% if request.form.get('correct_option') == index|string or (not request.form and option and option['is_correct']) %}checked{% endif %}><label for="option_{{ 'abcd'[index] }}">Alternativa {{ 'ABCD'[index] }}</label><input id="option_{{ 'abcd'[index] }}" name="option_{{ 'abcd'[index] }}" required value="{{ request.form.get('option_' + 'abcd'[index], option['text'] if option else '') }}"></div>{% endfor %}</fieldset>
+  <button class="button" type="submit">Salvar questão</button>
+</form></section>
+{% endblock %}

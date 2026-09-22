@@ -1,0 +1,25 @@
+{% if result %}
+  <span class="eyebrow">{{ 'SUA ÚLTIMA RESPOSTA' if saved_result else 'ANÁLISE DA RESPOSTA' }}</span>
+  <span class="result-icon {{ 'result-good' if result.correct else 'result-bad' }}">{{ '✓' if result.correct else '!' }}</span>
+  <h2 tabindex="-1" data-result-heading>{% if result.correct %}Boa análise.{% elif result.classification_correct %}Você classificou bem. Reveja a {{ 'pista' if scenario['decision_kind'] == 'evidence' else 'atitude' }}.{% else %}Reveja os sinais da mensagem.{% endif %}</h2>
+  <div class="answer-review"><p><strong>Classificação:</strong> {{ result.answer }} {% if result.classification_correct %}<span class="answer-ok">✓</span>{% else %}<span class="answer-miss">→ {{ result.expected }}</span>{% endif %}</p>{% if scenario['decision_prompt'] %}<p><strong>{{ 'Sua pista' if scenario['decision_kind'] == 'evidence' else 'Sua atitude' }}:</strong> {{ result.decision_selected }} {% if result.decision_correct %}<span class="answer-ok">✓</span>{% endif %}</p>{% if not result.decision_correct %}<p><strong>{{ 'Pista decisiva' if scenario['decision_kind'] == 'evidence' else 'Melhor atitude' }}:</strong> {{ result.decision_expected }}</p>{% endif %}{% endif %}</div>
+  <p>{{ scenario['explanation'] }}</p>
+  <div class="evidence-box"><strong>O que observar</strong><ul>{% for flag in scenario['red_flags'].split(';') %}<li>{{ flag.strip().rstrip('.') }}.</li>{% endfor %}</ul></div>
+  {% if scenario['decision_explanation'] %}<p>{{ scenario['decision_explanation'] }}</p>{% endif %}
+  {% if scenario['safe_action'] %}<div class="safe-action"><strong>Na vida real</strong><p>{{ scenario['safe_action'] }}</p></div>{% endif %}
+  <div class="decision-actions">
+    {% if next_scenario %}<a class="button button-full" href="{{ url_for('main.simulation', scenario_id=next_scenario['id']) }}">Próximo exercício →</a>{% elif has_quiz %}<a class="button button-full" href="{{ url_for('main.quiz', module_id=scenario['module_id']) }}">Ir para o quiz →</a>{% else %}<a class="button button-full" href="{{ url_for('main.module_detail', module_id=scenario['module_id']) }}">{{ 'Ver exercícios concluídos' if module_completed else 'Voltar aos exercícios' }} →</a>{% endif %}
+    <a class="retry-link" href="{{ url_for('main.simulation', scenario_id=scenario['id'], refazer=1) }}">Refazer este exercício</a>
+  </div>
+{% else %}
+  <span class="eyebrow">SUA VEZ</span>
+  <h2>Qual é a sua análise?</h2>
+  <p>Leia a mensagem, confira as pistas disponíveis e responda às duas perguntas.</p>
+  <form method="post" class="choice-form" data-answer-form>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <fieldset class="case-question"><legend>1. Esta mensagem é...</legend><div class="classification-options">{% for value, label in labels.items() %}<label class="classification-choice"><input type="radio" name="answer" value="{{ value }}" required><span>{{ label }}</span></label>{% endfor %}</div></fieldset>
+    {% if scenario['decision_prompt'] %}<fieldset class="case-question"><legend>2. {{ scenario['decision_prompt'] }}</legend>{% for index in (1, 2, 3) %}<label class="choice"><input type="radio" name="decision_answer" value="{{ index }}" required><span>{{ scenario['decision_' ~ 'abc'[index - 1]] }}</span></label>{% endfor %}</fieldset>{% endif %}
+    <p class="form-error" role="alert" data-form-error hidden></p>
+    <button class="button button-full" type="submit">Conferir resposta</button>
+  </form>
+{% endif %}

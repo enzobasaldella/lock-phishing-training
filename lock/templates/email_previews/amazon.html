@@ -1,0 +1,11 @@
+<div class="brand-email amazon-email">
+  <div class="amazon-top">
+    <div class="amazon-wordmark" aria-label="Amazon">amazon<span class="amazon-smile" aria-hidden="true"></span></div>
+    <div class="amazon-fake-nav">Seus pedidos <span>|</span> Sua conta <span>|</span> Amazon.com.br</div>
+  </div>
+  <div class="amazon-order"><strong>Pagamento recusado</strong><span>Pedido <b>#BR-843126</b></span></div>
+  <div class="amazon-product"><img src="{{ url_for('static', filename='fone-sem-fio-produto.png') }}" alt="Fone de ouvido sem fio azul-escuro" loading="lazy" decoding="async"><div><strong>Fone de ouvido sem fio</strong><span>Azul-escuro · 1 unidade</span><small>R$ 289,90</small></div></div>
+  <div class="brand-copy amazon-copy">{{ scenario['message'] }}</div>
+  <div class="amazon-payment"><strong>Consulte os detalhes do pedido para atualizar a forma de pagamento.</strong><span class="amazon-button" aria-label="Botão ilustrativo, não clicável">{{ scenario['cta_label'] or 'Revisar pagamento' }}</span></div>
+  <div class="amazon-footer"><p>Os preços e a disponibilidade dos produtos podem mudar após o envio desta mensagem. Consulte os detalhes do pedido para conferir as condições atuais.</p><p>© Amazon.com, Inc. Todos os direitos reservados.</p><small>Referência: BR-843126</small></div>
+</div>

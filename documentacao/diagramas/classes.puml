@@ -1,0 +1,79 @@
+@startuml
+!pragma layout smetana
+title Lock - Diagrama de Classes
+skinparam classAttributeIconSize 0
+skinparam linetype ortho
+
+class Usuario {
+  +id: Integer
+  +nome: String
+  +email: String
+  +perfil: Perfil
+  +autenticar(senha): Boolean
+}
+
+class Modulo {
+  +id: Integer
+  +titulo: String
+  +publicado: Boolean
+}
+
+class Cenario {
+  +id: Integer
+  +titulo: String
+  +tipo: TipoCenario
+  +dificuldade: Dificuldade
+  +classificacaoCorreta: Classificacao
+  +versaoConteudo: Integer
+  +avaliar(classificacao, respostaComplementar): Boolean
+}
+
+class Questao {
+  +id: Integer
+  +enunciado: String
+  +validarAlternativas(): Boolean
+}
+
+class Alternativa {
+  +id: Integer
+  +texto: String
+  +correta: Boolean
+}
+
+class TentativaSimulacao {
+  +id: Integer
+  +resposta: Classificacao
+  +versaoConteudo: Integer
+  +acertou: Boolean
+  +realizadaEm: DateTime
+}
+
+class TentativaQuiz {
+  +id: Integer
+  +pontuacao: Decimal
+  +realizadaEm: DateTime
+}
+
+class ProgressoModulo {
+  +id: Integer
+  +concluido: Boolean
+  +percentual: Decimal
+}
+
+class LogAuditoria {
+  +id: Integer
+  +acao: String
+  +realizadoEm: DateTime
+}
+
+Usuario "1" -- "0..*" ProgressoModulo
+Modulo "1" -- "0..*" ProgressoModulo
+Modulo "1" *-- "0..*" Cenario
+Modulo "1" *-- "0..*" Questao
+Questao "1" *-- "4" Alternativa
+Usuario "1" -- "0..*" TentativaSimulacao
+Cenario "1" -- "0..*" TentativaSimulacao
+Usuario "1" -- "0..*" TentativaQuiz
+Modulo "1" -- "0..*" TentativaQuiz
+Usuario "1" -- "0..*" LogAuditoria
+@enduml

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Editar cenário' if scenario else 'Novo cenário' }}{% endblock %}
+{% block content %}
+<section class="page-head compact"><div class="container"><a class="back-link" href="{{ url_for('admin.module_edit', module_id=module['id']) }}">← Voltar ao módulo</a><span class="eyebrow">Acervo de exercícios</span><h1>{{ 'Editar cenário' if scenario else 'Novo cenário' }}</h1><p>{{ module['title'] }}</p></div></section>
+<section class="section narrow-wide"><form method="post" class="form-card stack-form"><input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+  <label for="title">Título</label><input id="title" name="title" maxlength="120" required value="{{ request.form.get('title', scenario['title'] if scenario else '') }}">
+  <div class="form-grid"><div><label for="kind">Tipo</label><select id="kind" name="kind" required>{% set current_kind = request.form.get('kind', scenario['kind'] if scenario else '') %}<option value="">Selecione</option><option value="email" {% if current_kind == 'email' %}selected{% endif %}>E-mail</option><option value="sms" {% if current_kind == 'sms' %}selected{% endif %}>SMS</option><option value="message" {% if current_kind == 'message' %}selected{% endif %}>Mensagem</option></select></div><div><label for="classification">Classificação correta</label><select id="classification" name="correct_classification" required>{% set current_class = request.form.get('correct_classification', scenario['correct_classification'] if scenario else '') %}<option value="">Selecione</option><option value="safe" {% if current_class == 'safe' %}selected{% endif %}>Seguro</option><option value="suspicious" {% if current_class == 'suspicious' %}selected{% endif %}>Suspeito</option><option value="phishing" {% if current_class == 'phishing' %}selected{% endif %}>Phishing</option></select></div></div>
+  <label for="sender">Remetente fictício</label><input id="sender" name="sender" required value="{{ request.form.get('sender', scenario['sender'] if scenario else '') }}">
+  <label for="subject">Assunto</label><input id="subject" name="subject" required value="{{ request.form.get('subject', scenario['subject'] if scenario else '') }}">
+  <label for="message">Mensagem fictícia</label><textarea id="message" name="message" rows="5" required>{{ request.form.get('message', scenario['message'] if scenario else '') }}</textarea>
+  <label for="explanation">Explicação educativa</label><textarea id="explanation" name="explanation" rows="4" required>{{ request.form.get('explanation', scenario['explanation'] if scenario else '') }}</textarea>
+  <label for="red_flags">Indícios observados</label><textarea id="red_flags" name="red_flags" rows="3" required>{{ request.form.get('red_flags', scenario['red_flags'] if scenario else '') }}</textarea>
+  <div class="editor-section">
+    <h2>Apresentação do caso</h2>
+    <p>Estas informações dão contexto ao participante sem entregar a resposta.</p>
+    <div class="form-grid">
+      <div><label for="claimed_brand">Serviço citado (opcional)</label><input id="claimed_brand" name="claimed_brand" maxlength="80" value="{{ request.form.get('claimed_brand', scenario['claimed_brand'] or '' if scenario else '') }}"></div>
+      <div><label for="difficulty">Nível</label><select id="difficulty" name="difficulty">{% set level = request.form.get('difficulty', scenario['difficulty'] or '' if scenario else '') %}<option value="">Sem nível</option><option value="basico" {% if level == 'basico' %}selected{% endif %}>Básico</option><option value="intermediario" {% if level == 'intermediario' %}selected{% endif %}>Intermediário</option><option value="avancado" {% if level == 'avancado' %}selected{% endif %}>Avançado</option></select></div>
+    </div>
+    <label for="context">Contexto mostrado antes da mensagem</label><textarea id="context" name="context" rows="3">{{ request.form.get('context', scenario['context'] or '' if scenario else '') }}</textarea>
+    <div class="form-grid"><div><label for="cta_label">Texto do botão ilustrativo</label><input id="cta_label" name="cta_label" value="{{ request.form.get('cta_label', scenario['cta_label'] or '' if scenario else '') }}"></div><div><label for="display_target">Destino exibido (.example/.test ou oficial permitido)</label><input id="display_target" name="display_target" value="{{ request.form.get('display_target', scenario['display_target'] or '' if scenario else '') }}"></div></div>
+  </div>
+  <div class="editor-section">
+    <h2>Segunda pergunta (opcional)</h2>
+    <p>Peça uma atitude segura ou a identificação da pista decisiva. Preencha as três respostas e marque uma como correta.</p>
+    {% set question_kind = request.form.get('decision_kind', scenario['decision_kind'] if scenario else 'action') %}<label for="decision_kind">Tipo de pergunta</label><select id="decision_kind" name="decision_kind"><option value="action" {% if question_kind == 'action' %}selected{% endif %}>Atitude segura</option><option value="evidence" {% if question_kind == 'evidence' %}selected{% endif %}>Pista decisiva</option></select>
+    <label for="decision_prompt">Pergunta</label><textarea id="decision_prompt" name="decision_prompt" rows="2">{{ request.form.get('decision_prompt', scenario['decision_prompt'] or '' if scenario else '') }}</textarea>
+    {% for letter in 'abc' %}
+      <label for="decision_{{ letter }}">Opção {{ letter|upper }}</label><textarea id="decision_{{ letter }}" name="decision_{{ letter }}" rows="2">{{ request.form.get('decision_' ~ letter, scenario['decision_' ~ letter] or '' if scenario else '') }}</textarea>
+    {% endfor %}
+    {% set correct_decision = request.form.get('decision_correct', scenario['decision_correct']|string if scenario and scenario['decision_correct'] else '') %}
+    <label for="decision_correct">Resposta correta</label><select id="decision_correct" name="decision_correct"><option value="">Sem decisão prática</option>{% for index in (1, 2, 3) %}<option value="{{ index }}" {% if correct_decision == index|string %}selected{% endif %}>Opção {{ 'ABC'[index - 1] }}</option>{% endfor %}</select>
+    <label for="decision_explanation">Por que essa resposta é a melhor?</label><textarea id="decision_explanation" name="decision_explanation" rows="3">{{ request.form.get('decision_explanation', scenario['decision_explanation'] or '' if scenario else '') }}</textarea>
+    <label for="safe_action">Orientação para a vida real</label><textarea id="safe_action" name="safe_action" rows="3">{{ request.form.get('safe_action', scenario['safe_action'] or '' if scenario else '') }}</textarea>
+  </div>
+  <div class="notice"><strong>Simulação responsável</strong><p>Não inclua dados pessoais, links ativos nem credenciais. Use .example ou .test para páginas fictícias; apenas cenários seguros podem usar os destinos oficiais já permitidos.</p></div><button class="button" type="submit">Salvar cenário</button>
+</form></section>
+{% endblock %}

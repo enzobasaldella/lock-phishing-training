@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+instance/
+.pytest_cache/
+apoio-privado/
+/.env
+/.env.*
+/documentacao/entrega/

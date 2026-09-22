@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Quiz: {{ module['title'] }}{% endblock %}
+{% block content %}
+<section class="page-head compact"><div class="container"><a class="back-link" href="{{ url_for('main.module_detail', module_id=module['id']) }}">← Voltar ao módulo</a><span class="eyebrow">QUIZ</span><h1>{{ module['title'] }}</h1><p>Escolha uma alternativa para cada questão.</p></div></section>
+<section class="section narrow-wide">
+  {% if result %}
+    <article class="result-card centered"><span class="score-large">{{ result.percentage }}%</span><h2>{{ result.score }} de {{ result.total }} respostas corretas</h2><p>Use as explicações abaixo para revisar os pontos importantes.</p></article>
+    {% for item in result.feedback %}<article class="feedback-card"><span class="tag {{ 'tag-success' if item.correct else 'tag-warning' }}">{{ 'CORRETA' if item.correct else 'REVISAR' }}</span><h3>{{ item.prompt }}</h3><p>{{ item.explanation }}</p></article>{% endfor %}
+    <a class="button" href="{{ url_for('main.module_detail', module_id=module['id']) }}">Continuar treinamento</a>
+  {% else %}
+    <form method="post">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+      {% for item in questions %}
+        <fieldset class="question-card"><legend><span>Questão {{ loop.index }}</span>{{ item.question['prompt'] }}</legend>
+          {% for alternative in item.alternatives %}<label class="choice"><input type="radio" name="question_{{ item.question['id'] }}" value="{{ alternative['id'] }}" required><span>{{ alternative['text'] }}</span></label>{% endfor %}
+        </fieldset>
+      {% endfor %}
+      <button class="button" type="submit">Finalizar quiz</button>
+    </form>
+  {% endif %}
+</section>
+{% endblock %}

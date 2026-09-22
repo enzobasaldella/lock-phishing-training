@@ -1,0 +1,28 @@
+@startuml
+!pragma layout smetana
+title Lock - Sequência: realizar simulação de phishing
+actor Participante
+boundary "Interface Web" as UI
+control "Aplicação Flask" as SS
+database "Banco de Dados" as DB
+
+Participante -> UI: selecionar cenário
+UI -> SS: carregarCenario(id, usuarioId)
+SS -> DB: consultar cenário publicado
+DB --> SS: dados do cenário fictício
+SS -> DB: consultar última tentativa da edição atual
+DB --> SS: resposta anterior ou nenhuma
+SS --> UI: cenário sem links ativos
+UI --> Participante: exibir mensagem e painel de resposta
+Participante -> UI: inspecionar destino, se disponível
+UI --> Participante: revelar endereço não clicável ou ausência de dado
+
+Participante -> UI: enviar classificação e resposta complementar
+UI -> SS: requisição assíncrona com as duas respostas
+SS -> SS: comparar as respostas\ncom o gabarito da edição atual
+SS -> DB: salvar tentativa com versão do conteúdo
+SS -> DB: atualizar progresso
+DB --> SS: tentativa persistida
+SS --> UI: resultado, pistas e atitude recomendada
+UI --> Participante: atualizar painel sem recarregar a página
+@enduml

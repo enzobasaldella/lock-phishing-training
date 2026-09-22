@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block title %}{{ 'Editar módulo' if module else 'Novo módulo' }}{% endblock %}
+{% block content %}
+<section class="page-head compact"><div class="container"><a class="back-link" href="{{ url_for('admin.modules') }}">← Voltar aos módulos</a><span class="eyebrow">ADMINISTRAÇÃO</span><h1>{{ 'Editar módulo' if module else 'Novo módulo' }}</h1></div></section>
+<section class="section container admin-edit-grid">
+  <form method="post" class="form-card stack-form">
+    <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
+    <label for="title">Título</label><input id="title" name="title" maxlength="120" required value="{{ request.form.get('title', module['title'] if module else '') }}">
+    <label for="description">Descrição curta</label><textarea id="description" name="description" maxlength="300" rows="3" required>{{ request.form.get('description', module['description'] if module else '') }}</textarea>
+    <label for="content">Conteúdo educativo</label><textarea id="content" name="content" maxlength="5000" rows="9" required>{{ request.form.get('content', module['content'] if module else '') }}</textarea>
+    <label class="check-line"><input type="checkbox" name="published" value="1" {% if request.form.get('published') == '1' or (not request.form and module and module['published']) %}checked{% endif %}><span>Disponível para participantes</span></label>
+    <button class="button" type="submit">Salvar módulo</button>
+  </form>
+  {% if module %}<aside class="manage-content"><div class="row-heading"><h2>Cenários</h2><a href="{{ url_for('admin.scenario_create', module_id=module['id']) }}">Adicionar</a></div>{% for scenario in scenarios %}<div class="manage-row"><div><strong>{{ scenario['title'] }}</strong><small>{{ scenario['kind']|upper }} · {{ scenario['correct_classification']|upper }}</small></div><div><a href="{{ url_for('admin.scenario_edit', scenario_id=scenario['id']) }}">Editar</a><form class="inline-form" method="post" action="{{ url_for('admin.scenario_delete', scenario_id=scenario['id']) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="danger-link" type="submit">Remover</button></form></div></div>{% else %}<p>Nenhum cenário.</p>{% endfor %}
+  <div class="row-heading spaced-heading"><h2>Questões</h2><a href="{{ url_for('admin.question_create', module_id=module['id']) }}">Adicionar</a></div>{% for question in questions %}<div class="manage-row"><div><strong>{{ question['prompt'] }}</strong><small>Questão {{ loop.index }}</small></div><div><a href="{{ url_for('admin.question_edit', question_id=question['id']) }}">Editar</a><form class="inline-form" method="post" action="{{ url_for('admin.question_delete', question_id=question['id']) }}"><input type="hidden" name="csrf_token" value="{{ csrf_token }}"><button class="danger-link" type="submit">Remover</button></form></div></div>{% else %}<p>Nenhuma questão.</p>{% endfor %}</aside>{% endif %}
+</section>
+{% endblock %}

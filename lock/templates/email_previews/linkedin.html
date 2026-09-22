@@ -1,0 +1,19 @@
+<div class="brand-email linkedin-email">
+  <div class="linkedin-invite">
+    <div class="linkedin-wordmark" aria-label="LinkedIn">Linked<span>in</span><i>1</i></div>
+    <img class="linkedin-profile" src="{{ url_for('static', filename='ana-ribeiro-profile.png') }}" alt="Retrato fictício de Ana Ribeiro" loading="lazy" decoding="async">
+    <h3>Ana Ribeiro</h3>
+    <p class="linkedin-role">Gerente de relacionamento<br>São Paulo, SP</p>
+    <div class="linkedin-mutual"><span class="mutual-avatar">M</span><span class="mutual-avatar">R</span><span class="mutual-avatar">C</span><span>6 conexões em comum</span></div>
+    <p class="linkedin-note">{{ scenario['message'] }}</p>
+    <div class="linkedin-actions">
+      <span class="linkedin-primary" aria-label="Botão ilustrativo, não clicável">Aceitar convite</span>
+      <span class="linkedin-secondary" aria-label="Botão ilustrativo, não clicável">{{ scenario['cta_label'] or 'Ver perfil' }}</span>
+    </div>
+  </div>
+  <div class="linkedin-after">
+    <p>Não perca nenhuma atualização com o aplicativo LinkedIn</p>
+    <div class="store-badges" aria-hidden="true"><span><small>Disponível na</small>App Store</span><span><small>Disponível no</small>Google Play</span></div>
+    <div class="linkedin-footer"><span>Cancelar inscrição · Central de ajuda</span><small>© LinkedIn Corporation. Todos os direitos reservados.</small></div>
+  </div>
+</div>

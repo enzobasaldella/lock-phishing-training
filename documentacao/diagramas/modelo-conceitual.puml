@@ -1,0 +1,85 @@
+@startuml
+!pragma layout smetana
+title Lock - Modelo Conceitual
+hide circle
+skinparam linetype ortho
+
+entity USUARIO {
+  * id_usuario : inteiro <<PK>>
+  --
+  nome : texto
+  email : texto <<UNIQUE>>
+  perfil : enum
+}
+
+entity MODULO {
+  * id_modulo : inteiro <<PK>>
+  --
+  titulo : texto
+  publicado : booleano
+}
+
+entity CENARIO {
+  * id_cenario : inteiro <<PK>>
+  --
+  titulo : texto
+  tipo : enum
+  dificuldade : enum
+  classificacao_correta : enum
+  versao_conteudo : inteiro
+}
+
+entity QUESTAO {
+  * id_questao : inteiro <<PK>>
+  --
+  enunciado : texto
+}
+
+entity ALTERNATIVA {
+  * id_alternativa : inteiro <<PK>>
+  --
+  texto : texto
+  correta : booleano
+}
+
+entity TENTATIVA_SIMULACAO {
+  * id_tentativa_simulacao : inteiro <<PK>>
+  --
+  resposta : enum
+  versao_conteudo : inteiro
+  acertou : booleano
+  realizada_em : data_hora
+}
+
+entity TENTATIVA_QUIZ {
+  * id_tentativa_quiz : inteiro <<PK>>
+  --
+  pontuacao : decimal
+  realizada_em : data_hora
+}
+
+entity PROGRESSO_MODULO {
+  * id_progresso : inteiro <<PK>>
+  --
+  concluido : booleano
+  percentual : decimal
+}
+
+entity LOG_AUDITORIA {
+  * id_log : inteiro <<PK>>
+  --
+  acao : texto
+  realizado_em : data_hora
+}
+
+USUARIO ||--o{ PROGRESSO_MODULO
+MODULO ||--o{ PROGRESSO_MODULO
+MODULO ||--o{ CENARIO
+MODULO ||--o{ QUESTAO
+QUESTAO ||--|{ ALTERNATIVA
+USUARIO ||--o{ TENTATIVA_SIMULACAO
+CENARIO ||--o{ TENTATIVA_SIMULACAO
+USUARIO ||--o{ TENTATIVA_QUIZ
+MODULO ||--o{ TENTATIVA_QUIZ
+USUARIO ||--o{ LOG_AUDITORIA
+@enduml

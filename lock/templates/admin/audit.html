@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block title %}Auditoria{% endblock %}
+{% block content %}
+<section class="page-head compact"><div class="container"><a class="back-link" href="{{ url_for('admin.dashboard') }}">← Administração</a><span class="eyebrow">SEGURANÇA</span><h1>Log de auditoria</h1><p>Registro das alterações realizadas no conteúdo.</p></div></section>
+<section class="section container"><div class="table-card"><div class="table-scroll"><table><thead><tr><th>Data</th><th>Usuário</th><th>Ação</th><th>Entidade</th><th>ID</th></tr></thead><tbody>{% for log in logs %}<tr><td>{{ log['created_at'] }}</td><td>{{ log['user_name'] or 'Usuário removido' }}</td><td>{{ log['action'] }}</td><td>{{ log['entity'] }}</td><td>{{ log['entity_id'] or '—' }}</td></tr>{% else %}<tr><td colspan="5">Nenhuma ação registrada.</td></tr>{% endfor %}</tbody></table></div></div></section>
+{% endblock %}

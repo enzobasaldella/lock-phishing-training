@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block title %}Meu progresso{% endblock %}
+{% block content %}
+<section class="page-head progress-head"><div class="container"><a class="back-link" href="{{ url_for('main.dashboard') }}">← Voltar ao início</a><span class="eyebrow">SEU HISTÓRICO</span><h1>Meu progresso</h1><p>A cartilha lida e os exercícios analisados ficam registrados aqui.</p></div></section>
+<section class="section container progress-layout">
+  <div><h2>Áreas de aprendizagem</h2>{% for module in modules %}<article class="progress-card"><div><strong>{{ module['title'] }}</strong><span>{{ module['percentage'] }}%</span></div><progress class="progress-meter" value="{{ module['percentage'] }}" max="100" aria-label="{{ module['title'] }}: {{ module['percentage'] }}% concluído"></progress></article>{% endfor %}<a class="button button-secondary" href="{{ url_for('main.exercises') }}">Voltar aos exercícios →</a></div>
+  <aside><h2>Últimas respostas</h2><div class="history-list">{% for attempt in attempts %}<a class="history-entry" href="{{ url_for('main.simulation', scenario_id=attempt['scenario_id']) }}"><span class="status-dot {{ 'dot-good' if attempt['is_correct'] else 'dot-bad' }}"></span><span><strong>{{ attempt['title'] }}</strong><small>{% if attempt['older_edition'] %}Edição anterior · Refazer análise →{% else %}{{ 'Análise correta' if attempt['is_correct'] else 'Vale revisar' }} · Ver resposta →{% endif %}</small></span></a>{% else %}<p>Você ainda não respondeu a nenhum exercício.</p>{% endfor %}</div></aside>
+</section>
+{% endblock %}
