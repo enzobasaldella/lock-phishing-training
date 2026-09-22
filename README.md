@@ -80,24 +80,17 @@ persistência, progresso e administração. Os 18 testes passaram na validação
 local. Isso não substitui um teste de intrusão ou uma avaliação com usuários
 reais.
 
-## Documentação
+## Diagramas
 
-As etapas abaixo registram a pesquisa, a modelagem e o desenvolvimento do
-projeto:
-
-- [Etapa 01 — Pesquisa e escopo](documentacao/etapa-01-pesquisa.md)
-- [Etapa 02 — Requisitos e modelagem](documentacao/etapa-02-requisitos-e-diagramas.md)
-- [Etapa 03 — Desenvolvimento e testes](documentacao/etapa-03-desenvolvimento.md)
-
-Os [diagramas](documentacao/diagramas/) estão disponíveis como fontes PlantUML
-e imagens.
+Os [diagramas](diagrams/) de casos de uso, classes, sequência e modelo
+conceitual estão disponíveis como fontes PlantUML e imagens.
 
 ## Estrutura do projeto
 
 ```text
 lock/          aplicação Flask, páginas, estilos e esquema do banco
 tests/         testes automatizados
-documentacao/  etapas e diagramas do projeto
+diagrams/      diagramas e arquivos-fonte PlantUML
 run.py         inicialização do servidor local
 ```
 
