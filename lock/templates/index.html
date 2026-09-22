@@ -4,20 +4,19 @@
 <section class="hero">
   <div class="container hero-grid">
     <div>
-      <span class="eyebrow">LOCK / LABORATÓRIO DE SEGURANÇA</span>
-      <h1>Golpes mudam.<br><span>Seu olhar evolui.</span></h1>
-      <p class="hero-text">Treine decisões do dia a dia com mensagens fictícias, pistas reais de risco e explicações que você pode aplicar fora da tela.</p>
+      <span class="eyebrow">TREINAMENTO CONTRA PHISHING</span>
+      <h1>Recebeu uma mensagem suspeita?<br><span>Saiba o que conferir.</span></h1>
+      <p class="hero-text">Conteúdo de conscientização sobre phishing, com orientações claras e exercícios práticos para reconhecer tentativas de golpe.</p>
       <div class="button-row">
         <a class="button" href="{{ url_for('auth.register') }}">Começar treinamento</a>
         <a class="button button-secondary" href="{{ url_for('auth.login') }}">Já tenho uma conta</a>
       </div>
-      <p class="safe-note">Prática controlada · Sem envios externos · Sem pedir dados reais</p>
     </div>
     <aside class="hero-card" aria-label="Exemplo de aprendizado">
       <div class="mock-top"><span></span><span></span><span></span></div>
-      <span class="tag tag-warning">EXEMPLO DE SINAL DE ALERTA</span>
+      <span class="tag tag-warning">FIQUE ATENTO</span>
       <h2>“Sua conta será bloqueada em 15 minutos”</h2>
-      <p>Antes de responder, observe o que a mensagem tenta fazer você sentir — e fazer.</p>
+      <p>Um prazo curto pode ser uma forma de pressionar você a agir sem conferir.</p>
       <div class="signal-list">
         <span>01</span><p>Pedido inesperado</p>
         <span>02</span><p>Prazo muito curto</p>
@@ -29,13 +28,13 @@
 
 <section class="section container">
   <div class="section-heading">
-    <span class="eyebrow">O método Lock</span>
-    <h2>Uma leitura. Oito exercícios.</h2>
+    <span class="eyebrow">CONTEÚDO</span>
+    <h2>Aprenda a identificar tentativas de phishing</h2>
   </div>
   <div class="feature-grid">
-    <article class="feature-card"><span class="feature-number">CARTILHA</span><h3>O que é phishing</h3><p>Entenda os sinais de risco e descubra como confirmar uma mensagem por outro caminho.</p></article>
-    <article class="feature-card"><span class="feature-number">EXERCÍCIOS</span><h3>Mensagens do cotidiano</h3><p>Analise oito situações de compras, contas digitais e trabalho em três níveis de dificuldade.</p></article>
-    <article class="feature-card"><span class="feature-number">FEEDBACK</span><h3>Aprenda com sua resposta</h3><p>Veja as pistas de cada mensagem, guarde seu progresso e refaça o exercício quando quiser.</p></article>
+    <article class="feature-card"><span class="feature-number">CARTILHA</span><h3>O que é phishing</h3><p>Entenda como os golpes funcionam e o que observar antes de responder a uma mensagem.</p></article>
+    <article class="feature-card"><span class="feature-number">EXERCÍCIOS</span><h3>Mensagens para analisar</h3><p>Examine e-mails de compras, serviços digitais e trabalho. Nem toda mensagem suspeita é necessariamente um golpe.</p></article>
+    <article class="feature-card"><span class="feature-number">RESULTADOS</span><h3>Veja onde acertou</h3><p>Confira a explicação de cada resposta e retome os exercícios quando quiser.</p></article>
   </div>
 </section>
 {% endblock %}

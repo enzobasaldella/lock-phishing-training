@@ -4,9 +4,9 @@
 <section class="workspace-hero">
   <div class="container workspace-hero-grid">
     <div>
-      <span class="eyebrow">LOCK · TREINAMENTO ANTI-PHISHING</span>
-      <h1>Reconheça o risco antes do clique.</h1>
-      <p>Uma cartilha curta e oito mensagens para praticar. Leia, decida e veja por que cada escolha importa.</p>
+      <span class="eyebrow">SEU TREINAMENTO</span>
+      <h1>Aprenda a reconhecer phishing.</h1>
+      <p>Comece pela cartilha ou abra um exercício para analisar uma mensagem.</p>
       <div class="workspace-hero-actions"><a class="button" href="{{ url_for('main.exercises') }}">Ir para os exercícios →</a><a href="{{ url_for('main.guide') }}">Ler a cartilha</a></div>
     </div>
     <div class="workspace-progress" aria-label="Seu andamento nos exercícios">
@@ -22,19 +22,19 @@
   <article class="path-card path-guide">
     <span class="eyebrow">CARTILHA</span>
     <h2>O que é phishing</h2>
-    <p>Os sinais mais úteis para reconhecer uma tentativa de engano — e o que fazer quando a dúvida aparece.</p>
-    <div class="path-footer"><span>{{ 'Leitura concluída ✓' if guide and guide['completed'] else 'Leitura de 5 minutos' }}</span><a href="{{ url_for('main.guide') }}">{{ 'Revisar' if guide and guide['completed'] else 'Começar a ler' }} →</a></div>
+    <p>Entenda como identificar pedidos suspeitos e confirmar informações antes de agir.</p>
+    <div class="path-footer"><span>{{ 'Leitura concluída ✓' if guide and guide['completed'] else 'Leitura rápida' }}</span><a href="{{ url_for('main.guide') }}">{{ 'Revisar' if guide and guide['completed'] else 'Começar a ler' }} →</a></div>
   </article>
   <article class="path-card path-practice">
     <span class="eyebrow">PRÁTICA</span>
     <h2>Exercícios de phishing</h2>
     <p>Compras, serviços digitais e mensagens de trabalho. Nem toda mensagem é golpe: observe antes de classificar.</p>
-    <div class="path-footer"><span>{{ scenarios|length }} exercícios · 3 níveis</span><a href="{{ url_for('main.exercises') }}">Ver exercícios →</a></div>
+    <div class="path-footer"><span>Do básico ao avançado</span><a href="{{ url_for('main.exercises') }}">Ver exercícios →</a></div>
   </article>
 </section>
 
 <section class="section container dashboard-library">
-  <div class="section-heading row-heading"><div><span class="eyebrow">OITO SITUAÇÕES</span><h2>Abra uma mensagem</h2><p>Siga a ordem sugerida ou escolha um contexto familiar.</p></div><a href="{{ url_for('main.progress') }}">Ver histórico →</a></div>
+  <div class="section-heading row-heading"><div><span class="eyebrow">EXERCÍCIOS</span><h2>Escolha uma mensagem</h2><p>Comece por um assunto conhecido ou siga a ordem sugerida.</p></div><a href="{{ url_for('main.progress') }}">Ver histórico →</a></div>
   <div class="exercise-list">
     {% for scenario in scenarios %}
       {% include 'exercise_card.html' %}

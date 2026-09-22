@@ -61,7 +61,6 @@ h3 { font-size: 1.25rem; }
 .hero h1 span { color: var(--green-dark); }
 .hero-text { max-width: 620px; color: var(--muted); font-size: 1.15rem; }
 .button-row { flex-wrap: wrap; gap: 12px; }
-.safe-note { margin-top: 24px; color: var(--muted); font-size: .82rem; }
 .hero-card { position: relative; padding: 44px 38px 34px; border: 2px solid var(--ink); border-radius: 8px; background: var(--white); box-shadow: var(--shadow); transform: rotate(1.5deg); }
 .mock-top { position: absolute; top: 16px; left: 20px; display: flex; gap: 6px; }
 .mock-top span { width: 7px; height: 7px; border-radius: 50%; background: var(--line); }
@@ -116,7 +115,6 @@ h3 { font-size: 1.25rem; }
 .activity-card small, .manage-row small { display: block; color: var(--muted); }
 .activity-icon { display: grid; width: 36px; height: 36px; place-items: center; border-radius: 9px; color: var(--green-dark); background: var(--green-soft); font-weight: 800; }
 .message-card { overflow: hidden; }
-.message-banner { padding: 10px; color: #76520d; background: var(--yellow-soft); font: 800 .7rem/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; letter-spacing: .06em; text-align: center; }
 .message-head { display: flex; align-items: center; gap: 12px; padding: 22px; border-bottom: 1px solid var(--line); }
 .message-head > div { min-width: 0; flex-grow: 1; }
 .message-head small { display: block; overflow: hidden; color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }

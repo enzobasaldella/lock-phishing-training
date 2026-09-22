@@ -1,5 +1,5 @@
 <a class="exercise-tile" href="{{ url_for('main.simulation', scenario_id=scenario['id']) }}">
   <span class="exercise-logo exercise-logo-{{ scenario['case_key'].split('-')[0] if scenario['case_key'] else 'default' }}" aria-hidden="true">{{ (scenario['claimed_brand'] or scenario['title'])[0]|upper }}</span>
-  <span class="exercise-tile-copy"><strong>{{ scenario['title'] }}</strong><small>{{ scenario['claimed_brand'] or {'email':'E-mail','sms':'SMS','message':'Mensagem'}[scenario['kind']] }} · {{ {'basico':'Básico','intermediario':'Intermediário','avancado':'Avançado'}.get(scenario['difficulty'], 'Prática') }}</small></span>
+  <span class="exercise-tile-copy"><strong>{{ scenario['title'] }}</strong><small>{{ scenario['claimed_brand'] or {'email':'E-mail','sms':'SMS','message':'Mensagem'}[scenario['kind']] }}, nível {{ {'basico':'básico','intermediario':'intermediário','avancado':'avançado'}.get(scenario['difficulty'], 'livre') }}</small></span>
   <span class="exercise-status {{ 'is-done' if scenario['current_attempted'] else '' }}">{{ 'Revisar ✓' if scenario['current_attempted'] else ('Nova edição →' if scenario['attempted'] else 'Analisar →') }}</span>
 </a>

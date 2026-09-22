@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Exercícios de phishing{% endblock %}
 {% block content %}
-<section class="page-head exercise-page-head"><div class="container"><a class="back-link" href="{{ url_for('main.dashboard') }}">← Voltar ao início</a><span class="eyebrow">PRÁTICA</span><h1>Exercícios de phishing</h1><p>Oito situações inspiradas em mensagens do dia a dia. Há golpes, mensagens legítimas e casos que exigem confirmação.</p></div></section>
+<section class="page-head exercise-page-head"><div class="container"><a class="back-link" href="{{ url_for('main.dashboard') }}">← Voltar ao início</a><span class="eyebrow">PRÁTICA</span><h1>Exercícios de phishing</h1><p>Analise mensagens de serviços conhecidos e situações de trabalho. Algumas são legítimas; outras pedem uma verificação mais cuidadosa.</p></div></section>
 <section class="section container exercise-library">
-  <div class="library-progress"><strong>{{ progress['percentage'] if progress else 0 }}% analisado</strong><span>Suas respostas ficam salvas. Uma nova edição pode pedir outra análise sem apagar o histórico.</span><progress class="progress-meter" value="{{ progress['percentage'] if progress else 0 }}" max="100" aria-label="Exercícios analisados"></progress></div>
+  <div class="library-progress"><strong>{{ progress['percentage'] if progress else 0 }}% analisado</strong><span>Você pode voltar às respostas e refazer os exercícios.</span><progress class="progress-meter" value="{{ progress['percentage'] if progress else 0 }}" max="100" aria-label="Exercícios analisados"></progress></div>
   {% for key, heading, intro in [('basico','Comece pelo básico','Identifique o pedido e confira o contexto.'),('intermediario','Atenção aos detalhes','O visual convence, mas o destino pode contar outra história.'),('avancado','Desafios avançados','Remetentes plausíveis, anexos e dados técnicos exigem uma segunda leitura.')] %}
     <div class="exercise-group">
       <div class="exercise-group-heading"><span class="level-badge level-{{ key }}">{{ {'basico':'Básico','intermediario':'Intermediário','avancado':'Avançado'}[key] }}</span><h2>{{ heading }}</h2><p>{{ intro }}</p></div>

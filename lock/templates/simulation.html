@@ -12,16 +12,15 @@
 
 <section class="section container simulation-grid" data-simulation>
   <div class="case-stage">
-    <div class="stage-intro"><span class="eyebrow">MENSAGEM RECEBIDA</span><p>Uma simulação segura: botões e anexos desta mensagem não funcionam.</p></div>
+    <div class="stage-intro"><span class="eyebrow">MENSAGEM RECEBIDA</span><p>Observe quem enviou, o que é pedido e os detalhes da mensagem.</p></div>
     <article class="message-card mail-preview" aria-label="Mensagem simulada">
-      <div class="message-banner">SIMULAÇÃO LOCK · NENHUM LINK ESTÁ ATIVO</div>
       {% if scenario['case_key'] in ('google-acesso', 'microsoft-acesso') %}
         {% set mail_client = 'gmail' if scenario['case_key'] == 'google-acesso' else 'outlook' %}
         <div class="client-shell client-{{ mail_client }}" aria-label="Prévia ilustrativa do {{ 'Gmail' if mail_client == 'gmail' else 'Outlook' }}">
           <div class="client-topbar"><span class="client-menu" aria-hidden="true">☰</span><span class="client-logo">{{ 'M' if mail_client == 'gmail' else 'O' }}</span><strong>{{ 'Gmail' if mail_client == 'gmail' else 'Outlook' }}</strong><span class="client-search">⌕ &nbsp; Pesquisar no e-mail</span><span class="client-account" aria-hidden="true">CE</span></div>
           <div class="client-workspace"><div class="client-sidebar" aria-hidden="true"><span class="client-compose">＋ &nbsp; Nova mensagem</span><span class="client-folder active">▣ &nbsp; Caixa de entrada</span><span class="client-folder">☆ &nbsp; Com estrela</span><span class="client-folder">⌚ &nbsp; Adiados</span><span class="client-folder">▤ &nbsp; Rascunhos</span></div><div class="client-mail"><div class="client-toolbar" aria-hidden="true">← &nbsp;&nbsp; ▣ &nbsp;&nbsp; ⌑ &nbsp;&nbsp; ✉ <span>1 de 1 &nbsp; ‹ &nbsp; ›</span></div>
       {% endif %}
-      <div class="mail-header"><div class="mail-subject">{{ scenario['subject'] }}</div><div class="mail-sender"><span class="avatar">{{ scenario['claimed_brand'][0]|upper if scenario['claimed_brand'] else scenario['sender'][0]|upper }}</span><div><strong>{{ scenario['sender'] }}</strong><small>Para: você · {{ {'email':'e-mail','sms':'SMS','message':'mensagem'}[scenario['kind']] }}</small></div></div></div>
+      <div class="mail-header"><div class="mail-subject">{{ scenario['subject'] }}</div><div class="mail-sender"><span class="avatar">{{ scenario['claimed_brand'][0]|upper if scenario['claimed_brand'] else scenario['sender'][0]|upper }}</span><div><strong>{{ scenario['sender'] }}</strong><small>Para: você</small></div></div></div>
       {% if scenario['case_key'] == 'linkedin-convite' %}
         {% include 'email_previews/linkedin.html' %}
       {% elif scenario['case_key'] == 'amazon-pagamento' %}
@@ -44,7 +43,7 @@
       {% if scenario['case_key'] in ('google-acesso', 'microsoft-acesso') %}</div></div></div>{% endif %}
     </article>
     {% if scenario['display_target'] %}
-      <details class="inspect-box" {% if result %}open{% endif %}><summary>Inspecionar o destino do botão</summary><p>O botão aparenta levar a:</p><code>{{ scenario['display_target'] }}</code><small>É apenas texto para análise; não há link ativo.</small></details>
+      <details class="inspect-box" {% if result %}open{% endif %}><summary>Ver destino do botão</summary><p>Endereço exibido:</p><code>{{ scenario['display_target'] }}</code></details>
     {% elif scenario['cta_label'] and scenario['case_key'] == 'microsoft-acesso' %}
       <div class="inspect-box"><strong>Destino indisponível nesta captura</strong><p>Não é possível confirmar o endereço do botão por esta visualização. Verifique a atividade da conta por um caminho independente.</p></div>
     {% endif %}

@@ -6,6 +6,17 @@ from flask.cli import with_appcontext
 from werkzeug.security import generate_password_hash
 
 
+EXERCISE_DESCRIPTION = (
+    "Analise mensagens de compras, contas digitais e trabalho para reconhecer sinais de phishing."
+)
+EXERCISE_CONTENT = (
+    "Leia a mensagem como se tivesse acabado de chegar. Observe o remetente, "
+    "o pedido e o destino indicado. Depois, classifique a mensagem e responda "
+    "à pergunta sobre a pista principal ou a melhor atitude. Alguns avisos são "
+    "legítimos; outros exigem confirmação. A explicação mostra o que pesou em cada caso."
+)
+
+
 def get_db():
     if "db" not in g:
         g.db = sqlite3.connect(
@@ -340,8 +351,8 @@ def seed_brand_cases(database):
             (
                 module_slug,
                 "Exercícios de phishing",
-                "Oito mensagens para analisar: compras, contas, trabalho e redes sociais.",
-                "Leia cada mensagem como se ela tivesse acabado de chegar. Observe quem enviou, o que pede e para onde a ação levaria. Depois, classifique o risco e identifique a pista decisiva ou a atitude segura. Há mensagens fraudulentas, legítimas e situações que pedem verificação. Os botões e anexos são ilustrativos; nenhuma ação sai do Lock.",
+                EXERCISE_DESCRIPTION,
+                EXERCISE_CONTENT,
             ),
         )
         module_id = cursor.lastrowid
@@ -700,20 +711,28 @@ def organize_learning_content(database):
         database.execute(
             """UPDATE modules SET
                    title = CASE WHEN title = 'Caixa de entrada: quatro decisões'
-                                THEN 'Exercícios de phishing' ELSE title END,
-                   description = CASE WHEN description = 'Convites, compras, acessos e downloads: pratique antes de confiar.'
-                                      THEN 'Oito mensagens para analisar: compras, contas, trabalho e redes sociais.' ELSE description END,
-                   content = CASE WHEN content = 'Nesta trilha, você vai analisar quatro mensagens inspiradas em situações comuns do cotidiano digital. Leia o contexto, observe o remetente e inspecione o destino do botão antes de responder. Nenhum botão da mensagem funciona de verdade. Sua tarefa é classificar o risco e escolher a ação mais segura. Errar faz parte do treino: o feedback mostra onde estavam as pistas.'
-                                  THEN 'Leia cada mensagem como se ela tivesse acabado de chegar. Observe quem enviou, o que pede e para onde a ação levaria. Depois, classifique o risco e escolha uma resposta segura. Há mensagens fraudulentas, uma mensagem legítima e uma situação que pede verificação. Os botões e anexos são ilustrativos; nenhuma ação sai do Lock.' ELSE content END
+                                THEN 'Exercícios de phishing' ELSE title END
                WHERE id = ?""",
             (exercise["id"],),
         )
+        # Refresh only stock copy, leaving administrator edits untouched.
         database.execute(
-            """UPDATE modules SET content = ? WHERE id = ? AND content = ?""",
+            """UPDATE modules SET description = ? WHERE id = ? AND description IN (?, ?)""",
             (
-                "Leia cada mensagem como se ela tivesse acabado de chegar. Observe quem enviou, o que pede e para onde a ação levaria. Depois, classifique o risco e identifique a pista decisiva ou a atitude segura. Há mensagens fraudulentas, legítimas e situações que pedem verificação. Os botões e anexos são ilustrativos; nenhuma ação sai do Lock.",
+                EXERCISE_DESCRIPTION,
                 exercise["id"],
+                "Convites, compras, acessos e downloads: pratique antes de confiar.",
+                "Oito mensagens para analisar: compras, contas, trabalho e redes sociais.",
+            ),
+        )
+        database.execute(
+            """UPDATE modules SET content = ? WHERE id = ? AND content IN (?, ?, ?)""",
+            (
+                EXERCISE_CONTENT,
+                exercise["id"],
+                "Nesta trilha, você vai analisar quatro mensagens inspiradas em situações comuns do cotidiano digital. Leia o contexto, observe o remetente e inspecione o destino do botão antes de responder. Nenhum botão da mensagem funciona de verdade. Sua tarefa é classificar o risco e escolher a ação mais segura. Errar faz parte do treino: o feedback mostra onde estavam as pistas.",
                 "Leia cada mensagem como se ela tivesse acabado de chegar. Observe quem enviou, o que pede e para onde a ação levaria. Depois, classifique o risco e escolha uma resposta segura. Há mensagens fraudulentas, uma mensagem legítima e uma situação que pede verificação. Os botões e anexos são ilustrativos; nenhuma ação sai do Lock.",
+                "Leia cada mensagem como se ela tivesse acabado de chegar. Observe quem enviou, o que pede e para onde a ação levaria. Depois, classifique o risco e identifique a pista decisiva ou a atitude segura. Há mensagens fraudulentas, legítimas e situações que pedem verificação. Os botões e anexos são ilustrativos; nenhuma ação sai do Lock.",
             ),
         )
         if guide is None:

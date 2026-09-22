@@ -1,7 +1,7 @@
 # Lock
 
-Plataforma web, em português brasileiro, para praticar a identificação de
-phishing em um ambiente controlado.
+Plataforma web, em português brasileiro, com conteúdo de conscientização e
+exercícios práticos sobre phishing.
 
 O Lock transforma orientações de segurança em prática: o participante lê uma
 cartilha curta, analisa mensagens fictícias, classifica o risco, identifica a
@@ -16,16 +16,16 @@ respostas e seu progresso ficam salvos para revisão.
 ## O que o Lock oferece
 
 - **O que é phishing:** cartilha sobre sinais de risco e verificação segura.
-- **Exercícios de phishing:** oito situações, do básico ao avançado, com
+- **Exercícios de phishing:** mensagens de diferentes contextos e níveis, com
   explicação após cada resposta e opção de refazer.
 - **Meu progresso:** conclusão da cartilha, percentual dos exercícios e
   respostas anteriores.
 - **Administração:** gestão de conteúdo, indicadores agregados e auditoria.
 
-Os exercícios abordam LinkedIn, Google, Amazon, Netflix, Uber, Microsoft,
-mensagens de RH e Office. O acervo combina quatro golpes, duas mensagens
-legítimas e dois casos inconclusivos. As perguntas alternam entre identificar
-uma pista e escolher uma atitude.
+O acervo inicial aborda LinkedIn, Google, Amazon, Netflix, Uber, Microsoft,
+mensagens de RH e Office. Combina golpes, mensagens legítimas e casos que
+precisam de confirmação. Novos exercícios podem ser cadastrados na área de
+administração.
 Os retratos representam personagens fictícios; a foto de produto é ilustrativa.
 Todos os botões e anexos dos exemplos são **inertes**.
 

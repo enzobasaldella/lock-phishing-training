@@ -39,6 +39,10 @@ class LockApplicationTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertIn("frame-ancestors 'none'", response.headers["Content-Security-Policy"])
         self.assertEqual(response.headers["X-Frame-Options"], "DENY")
+        page = response.get_data(as_text=True)
+        self.assertIn("Conteúdo de conscientização sobre phishing", page)
+        self.assertNotIn("Uma leitura. Oito exercícios.", page)
+        self.assertNotIn("Prática controlada", page)
 
     def test_participant_can_login_and_complete_simulation(self):
         response = self.login()
@@ -161,7 +165,7 @@ class LockApplicationTests(unittest.TestCase):
                 page = self.client.get(f"/simulations/{case['id']}").get_data(as_text=True)
                 self.assertIn("client-shell", page)
                 self.assertIn("Caixa de entrada", page)
-                self.assertIn("SIMULAÇÃO LOCK · NENHUM LINK ESTÁ ATIVO", page)
+                self.assertNotIn("message-banner", page)
 
     def test_eight_cases_are_complete_and_idempotent(self):
         with self.app.app_context():
@@ -214,7 +218,7 @@ class LockApplicationTests(unittest.TestCase):
             case_id, correct_decision, target = case
 
         page = self.client.get(f"/simulations/{case_id}").get_data(as_text=True)
-        self.assertIn("Inspecionar o destino do botão", page)
+        self.assertIn("Ver destino do botão", page)
         self.assertIn(target, page)
         self.assertNotIn(f'href="https://{target}', page)
 
@@ -339,7 +343,7 @@ class LockApplicationTests(unittest.TestCase):
         self.assertIn("Qual é a sua análise?", page)
         self.assertNotIn("SUA ÚLTIMA RESPOSTA", page)
         self.assertIn("Nova edição →", self.client.get("/exercises").get_data(as_text=True))
-        self.assertIn("Edição anterior · Refazer análise", self.client.get("/progress").get_data(as_text=True))
+        self.assertIn("Edição anterior. Refazer análise", self.client.get("/progress").get_data(as_text=True))
 
     def test_ajax_answer_and_guide_reading_persist_after_restart(self):
         self.login()
@@ -439,7 +443,7 @@ class LockApplicationTests(unittest.TestCase):
         hr = self.client.get(f"/simulations/{case_ids['rh-memorando']}").get_data(as_text=True)
         self.assertIn("hr-attachment", hr)
         self.assertIn("mariana-lopes-profile.png", hr)
-        self.assertIn("anexo não clicável", hr)
+        self.assertIn('aria-label="Anexo ilustrativo, não clicável"', hr)
 
         for asset in ("ana-ribeiro-profile.png", "mariana-lopes-profile.png", "fone-sem-fio-produto.png"):
             image = self.client.get(f"/static/{asset}")
